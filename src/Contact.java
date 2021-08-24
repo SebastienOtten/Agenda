@@ -3,6 +3,7 @@ public abstract class Contact {
 		//Attributs de la classe
 			private String firstname ;
 			private String lastname ;
+			private String type ;
 			public String email;
 			private  String Phone;
 			 
@@ -19,6 +20,9 @@ public abstract class Contact {
 			public String getlastname() {
 				return lastname;
 			}
+			public String getType() {
+				return type;
+			}
 			public String getemail() {
 				return email;
 			}
@@ -33,6 +37,9 @@ public abstract class Contact {
 			}
 			public  void setlastname(String Lastname) {
 				lastname = Lastname;
+			}
+			public void setType(String type) {
+				this.type = type;
 			}
 			public  void setEmail(String Email) {
 				email = Email;

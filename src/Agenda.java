@@ -5,7 +5,7 @@ public class Agenda {
 	static Scanner scan = new Scanner(System.in); 
 	static eventfactory factory1 = new eventfactory(); 
 	static contactfactory factory = new contactfactory(); 
-	
+	static ArrayList<String> emails = new ArrayList<String>();
 	public static void main(String[] args) {
 	
 	System.out.println("                  AGENDA              ");
@@ -16,7 +16,6 @@ public class Agenda {
 	Menu(Connexion());
 	
 }
-
 	
 /*méthodes*/
 	
@@ -59,34 +58,33 @@ private static void Menu (User user) {
 	System.out.println("5) Chercher un évènement par date");
 	choixutilisateur=scan.nextInt(); 
 
-	
-	//S'il choisit le 1, méthode creation de contact
-	if(choixutilisateur==1) {
-		createContact(user);
-	}
-	//S'il choisit le 2, méthode creation d'un évènement
-		if(choixutilisateur==2) {
-			createEvent(user);
-		}
-	//S'il choisit le 3, méthode liste des contacts
-	else if (choixutilisateur==3) {
-		listContact(user);
-	}
-	//S'il choisit le 4, méthode liste des évènements
-		else if (choixutilisateur==4) {
-			listEvent (user);
-		}
-		
-		else if(choixutilisateur==5) {
-			DateEvent(user); 
-		}
-	//S'il choisit un chiffre supérieur (erreur)
-	else if (choixutilisateur>5){
-		System.out.println("Le numéro encodé est invalide. Veuillez faire un choix entre 1 et 4.");
-		Menu(user);
-	}
-	
+	switch(choixutilisateur){
+	   
+    case 1: 
+    	createContact(user);
+        break;
+
+    case 2:
+    	createEvent(user);
+        break;
+
+    case 3:
+    	listContact(user);
+        break;
+    
+    case 4:
+    	listEvent (user);
+    	
+    case 5:
+    	DateEvent(user);
+    default:
+    	System.out.println("Le numéro encodé est invalide. Veuillez faire un choix entre 1 et 5.");
+        break;
 }
+	Menu(user);
+	}
+	
+
 
 
 
@@ -110,6 +108,8 @@ private static void createContact (User user) {
 		
 		System.out.println("Quelle est son adresse mail ?"); 
 		String NewEmail=scan.next();
+		emails.add(NewEmail);
+		  
 		
 		System.out.println("Quel est son numéro de téléphone?");
 		String NewPhone=scan.next(); 
@@ -124,6 +124,7 @@ private static void createContact (User user) {
 		System.out.println("--> Nouveau contact créé !");
 		System.out.println("Prénom : " + contact.getfirstname());
 		System.out.println("Nom de famille: " + contact.getlastname());
+		System.out.println(" Type : " + contact.getType() );
 		System.out.println("Adresse mail : " + contact.getemail());
 		System.out.println("Numéro de téléphone : " +contact.getPhone()); 
 		System.out.println("");
@@ -166,20 +167,14 @@ private static void createEvent (User user) {
 		String Newcontact=scan.next();
 		
 		System.out.println("Tapez son mail");
-		ArrayList<Contact> contacts = user.getContacts();
 		String contactliés=scan.next();
-		
-		for (Contact contact : contacts) {
-			if (contact.email.equals(contactliés)) {
-				break;
-			}
-			else {
+		if (!emails.contains(contactliés)) {
 				System.out.println("Ce mail n'appartient à aucun contact.");
 				contactliés = null;
 				Newcontact = null;
-				break;
+				
 			}
-		}
+		
 		
 //Ensuite, on lie les infos en créant l'instance de la classe event
 		event.setName(NewName); 

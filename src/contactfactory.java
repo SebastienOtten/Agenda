@@ -1,5 +1,6 @@
 public class contactfactory {
 
+
 	public Contact CreateContact(int type) {
 		if (type==1){
 			return new Privé(); 
